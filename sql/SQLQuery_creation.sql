@@ -94,3 +94,60 @@ CREATE TABLE Listening_History (
     FOREIGN KEY (track_id) REFERENCES Tracks(track_id)
     ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+ALTER TABLE Albums
+DROP CONSTRAINT FK__Albums__artist_i__3118447E;
+
+ALTER TABLE Albums
+DROP COLUMN artist_id;
+
+CREATE TABLE Artist_Genres (
+    artist_id INT,
+    genre_id INT,
+    PRIMARY KEY (artist_id, genre_id),
+    FOREIGN KEY (artist_id) REFERENCES Artists(artist_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Artist_Tracks (
+    artist_id INT,
+    track_id INT,
+    PRIMARY KEY (artist_id, track_id),
+    FOREIGN KEY (artist_id) REFERENCES Artists(artist_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (track_id) REFERENCES Tracks(track_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE User_Albums (
+    user_id INT,
+    album_id INT,
+    PRIMARY KEY (user_id, album_id),
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (album_id) REFERENCES Albums(album_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Artist_Albums (
+    artist_id INT,
+    album_id INT,
+    PRIMARY KEY (artist_id, album_id),
+    FOREIGN KEY (artist_id) REFERENCES Artists(artist_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (album_id) REFERENCES Albums(album_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+ALTER TABLE Listening_History
+ADD FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+CREATE TABLE Album_Genres (
+    album_id INT,
+    genre_id INT,
+    PRIMARY KEY (album_id, genre_id),
+    FOREIGN KEY (album_id) REFERENCES Albums(album_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Playlist_Genres (
+    playlist_id INT,
+    genre_id INT,
+    PRIMARY KEY (playlist_id, genre_id),
+    FOREIGN KEY (playlist_id) REFERENCES Playlists(playlist_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
