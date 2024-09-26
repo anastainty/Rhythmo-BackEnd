@@ -1,0 +1,10 @@
+{% extends "player/base.html" %}
+
+{% block content %}
+  <h2>Now Playing: {{ track.title }}</h2>
+  <p>Genre: {{ track.genre }}</p>
+  <audio controls>
+    <source src="{{ track.file.url }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+{% endblock %}
