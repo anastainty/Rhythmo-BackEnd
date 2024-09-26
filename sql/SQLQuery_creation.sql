@@ -96,7 +96,7 @@ CREATE TABLE Listening_History (
 );
 
 ALTER TABLE Albums
-DROP CONSTRAINT FK__Albums__artist_i__3118447E;
+DROP CONSTRAINT FK__Albums__artist_i__440B1D61;
 
 ALTER TABLE Albums
 DROP COLUMN artist_id;
