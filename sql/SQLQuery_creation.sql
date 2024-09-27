@@ -32,13 +32,10 @@ CREATE INDEX idx_Genres_name ON Genres (name);
 CREATE TABLE Albums (
     album_id INT PRIMARY KEY IDENTITY(1,1),
     title NVARCHAR(255) NOT NULL,
-    artist_id INT,
     release_date DATE,
     duration TIME,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (artist_id) REFERENCES Artists(artist_id)
-    ON DELETE CASCADE ON UPDATE CASCADE
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX idx_Albums_title ON Albums (title);
@@ -95,11 +92,6 @@ CREATE TABLE Listening_History (
     ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-ALTER TABLE Albums
-DROP CONSTRAINT FK__Albums__artist_i__440B1D61;
-
-ALTER TABLE Albums
-DROP COLUMN artist_id;
 
 CREATE TABLE Artist_Genres (
     artist_id INT,
@@ -151,3 +143,14 @@ CREATE TABLE Playlist_Genres (
     FOREIGN KEY (playlist_id) REFERENCES Playlists(playlist_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE Artist_Followers (
+    artist_id INT,
+    user_id INT,
+    PRIMARY KEY (artist_id, user_id),
+    FOREIGN KEY (artist_id) REFERENCES Artists(artist_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+ALTER TABLE Artists 
+ADD follower_count INT DEFAULT 0;
