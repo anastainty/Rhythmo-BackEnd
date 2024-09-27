@@ -33,7 +33,6 @@ CREATE TABLE Albums (
     album_id INT PRIMARY KEY IDENTITY(1,1),
     title NVARCHAR(255) NOT NULL,
     release_date DATE,
-    duration TIME,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -92,65 +91,62 @@ CREATE TABLE Listening_History (
     ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 CREATE TABLE Artist_Genres (
     artist_id INT,
     genre_id INT,
     PRIMARY KEY (artist_id, genre_id),
-    FOREIGN KEY (artist_id) REFERENCES Artists(artist_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (artist_id) REFERENCES Artists(artist_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (genre_id) REFERENCES Genres(genre_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Artist_Tracks (
     artist_id INT,
     track_id INT,
     PRIMARY KEY (artist_id, track_id),
-    FOREIGN KEY (artist_id) REFERENCES Artists(artist_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (track_id) REFERENCES Tracks(track_id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (artist_id) REFERENCES Artists(artist_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (track_id) REFERENCES Tracks(track_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE User_Albums (
     user_id INT,
     album_id INT,
     PRIMARY KEY (user_id, album_id),
-    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (album_id) REFERENCES Albums(album_id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (album_id) REFERENCES Albums(album_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Artist_Albums (
     artist_id INT,
     album_id INT,
     PRIMARY KEY (artist_id, album_id),
-    FOREIGN KEY (artist_id) REFERENCES Artists(artist_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (album_id) REFERENCES Albums(album_id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-ALTER TABLE Listening_History
-ADD FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
-CREATE TABLE Album_Genres (
-    album_id INT,
-    genre_id INT,
-    PRIMARY KEY (album_id, genre_id),
-    FOREIGN KEY (album_id) REFERENCES Albums(album_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (artist_id) REFERENCES Artists(artist_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (album_id) REFERENCES Albums(album_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Playlist_Genres (
     playlist_id INT,
     genre_id INT,
     PRIMARY KEY (playlist_id, genre_id),
-    FOREIGN KEY (playlist_id) REFERENCES Playlists(playlist_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (playlist_id) REFERENCES Playlists(playlist_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (genre_id) REFERENCES Genres(genre_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Artist_Followers (
     artist_id INT,
     user_id INT,
     PRIMARY KEY (artist_id, user_id),
-    FOREIGN KEY (artist_id) REFERENCES Artists(artist_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (artist_id) REFERENCES Artists(artist_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-ALTER TABLE Artists 
-ADD follower_count INT DEFAULT 0;
