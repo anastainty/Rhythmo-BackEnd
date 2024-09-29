@@ -1,0 +1,70 @@
+INFO 2024-09-29 18:14:40,830 autoreload Watching for file changes with StatReloader
+INFO 2024-09-29 18:14:42,573 basehttp "GET / HTTP/1.1" 200 1316
+INFO 2024-09-29 18:14:48,572 basehttp "GET /api/tracks/ HTTP/1.1" 200 10637
+INFO 2024-09-29 18:14:48,598 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+INFO 2024-09-29 18:14:48,600 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+INFO 2024-09-29 18:14:48,600 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+INFO 2024-09-29 18:14:48,602 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:14:48,602 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:14:48,603 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2024-09-29 18:14:48,603 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:14:48,605 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:14:48,605 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:14:48,606 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:14:48,606 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:14:48,645 basehttp "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0
+INFO 2024-09-29 18:15:10,297 basehttp "GET /api/users/ HTTP/1.1" 200 9338
+INFO 2024-09-29 18:24:14,229 basehttp "GET /api/tracks/ HTTP/1.1" 200 10637
+INFO 2024-09-29 18:24:22,933 basehttp "OPTIONS /api/tracks/ HTTP/1.1" 200 12815
+INFO 2024-09-29 18:24:25,766 basehttp "OPTIONS /api/tracks/ HTTP/1.1" 200 12815
+INFO 2024-09-29 18:24:30,914 basehttp "OPTIONS /api/tracks/ HTTP/1.1" 200 12815
+INFO 2024-09-29 18:24:31,909 basehttp "GET /api/tracks/ HTTP/1.1" 200 10637
+INFO 2024-09-29 18:24:46,973 basehttp "GET /api/tracks/2 HTTP/1.1" 301 0
+INFO 2024-09-29 18:24:46,995 basehttp "GET /api/tracks/2/ HTTP/1.1" 200 12230
+INFO 2024-09-29 18:45:23,962 autoreload Watching for file changes with StatReloader
+WARNING 2024-09-29 18:53:12,526 log Bad Request: /api/playlists/
+WARNING 2024-09-29 18:54:03,342 log Not Found: /api/tracklist/
+WARNING 2024-09-29 18:54:03,342 basehttp "GET /api/tracklist/ HTTP/1.1" 404 13097
+INFO 2024-09-29 18:54:13,215 basehttp "GET /api/playlists/ HTTP/1.1" 200 8813
+INFO 2024-09-29 18:54:13,336 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+INFO 2024-09-29 18:54:13,337 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2024-09-29 18:54:13,337 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+INFO 2024-09-29 18:54:13,337 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+INFO 2024-09-29 18:54:13,339 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:54:13,340 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:54:13,341 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:54:13,341 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:54:13,341 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:54:13,341 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:54:13,341 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:54:13,383 basehttp "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0
+WARNING 2024-09-29 18:55:34,675 log Bad Request: /api/playlists/
+INFO 2024-09-29 18:56:17,610 basehttp "GET /api/users/ HTTP/1.1" 200 9338
+INFO 2024-09-29 18:56:17,644 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+INFO 2024-09-29 18:56:17,656 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2024-09-29 18:56:17,656 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+INFO 2024-09-29 18:56:17,657 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:56:17,657 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:56:17,657 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+INFO 2024-09-29 18:56:17,658 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:56:17,658 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:56:17,658 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:56:17,659 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:56:17,660 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 304 0
+INFO 2024-09-29 18:56:17,689 basehttp "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0
+INFO 2024-09-29 18:57:16,979 basehttp "POST /api/users/ HTTP/1.1" 201 9793
+INFO 2024-09-29 18:57:27,563 basehttp "GET /api/ HTTP/1.1" 200 5973
+INFO 2024-09-29 18:57:41,136 basehttp "GET /api/playlists/ HTTP/1.1" 200 8893
+INFO 2024-09-29 18:57:59,677 basehttp "POST /api/playlists/ HTTP/1.1" 201 9155
+INFO 2024-09-29 18:58:14,199 basehttp "GET /api/playlists/1 HTTP/1.1" 301 0
+INFO 2024-09-29 18:58:14,218 basehttp "GET /api/playlists/1/ HTTP/1.1" 200 10637
+INFO 2024-09-29 18:58:16,435 basehttp "DELETE /api/playlists/1/ HTTP/1.1" 200 10219
+INFO 2024-09-29 18:58:20,447 basehttp "GET /api/ HTTP/1.1" 200 5973
+INFO 2024-09-29 18:58:24,234 basehttp "GET /api/playlists/ HTTP/1.1" 200 8893
+INFO 2024-09-29 18:58:28,586 basehttp "GET /api/users/ HTTP/1.1" 200 9785
+INFO 2024-09-29 18:58:34,336 basehttp "GET /api/users/1 HTTP/1.1" 301 0
+INFO 2024-09-29 18:58:34,355 basehttp "GET /api/users/1/ HTTP/1.1" 200 11283
+INFO 2024-09-29 18:58:36,506 basehttp "DELETE /api/users/1/ HTTP/1.1" 200 10640
+WARNING 2024-09-29 19:13:28,730 log Bad Request: /api/playlists/1/
+WARNING 2024-09-29 19:15:49,144 log Bad Request: /api/playlists/1/
+WARNING 2024-09-29 19:17:03,171 log Bad Request: /api/playlists/1/
