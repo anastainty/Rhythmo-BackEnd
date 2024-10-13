@@ -30,7 +30,7 @@ def add_track(request):
 
 #@login_required
 def track_list(request):
-    tracks = TrackService.get_track_list()
+    tracks = TrackService.get_all_tracks()
     return render(request, 'player/track_list.html', {'tracks': tracks})
 
 

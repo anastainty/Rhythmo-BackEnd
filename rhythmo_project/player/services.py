@@ -12,7 +12,7 @@ class TrackService:
         form_data.save()
 
     @staticmethod
-    def get_track_list():
+    def get_all_tracks():
         """
         Returns all tracks.
         """
@@ -54,10 +54,6 @@ class AlbumService:
     def get_all_albums():
         return Album.objects.all()
 
-class TrackService:
-    @staticmethod
-    def get_all_tracks():
-        return Track.objects.all()
 
 class PlaylistService:
     @staticmethod
