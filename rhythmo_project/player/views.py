@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import User, Artist, Genre, Album, Track, Playlist
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from .forms import TrackForm
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone
 from rest_framework import viewsets
-from .services import TrackService
 from .serializers import (
     UserSerializer, ArtistSerializer, GenreSerializer,
     AlbumSerializer, TrackSerializer, PlaylistSerializer
@@ -46,28 +44,34 @@ def listen_track(request, track_id):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = UserService.get_all_users()
     serializer_class = UserSerializer
+    permission_classes = (IsAdminUser,)
 
 
 class ArtistViewSet(viewsets.ModelViewSet):
     queryset = ArtistService.get_all_artists()
     serializer_class = ArtistSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = GenreService.get_all_genres()
     serializer_class = GenreSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class AlbumViewSet(viewsets.ModelViewSet):
     queryset = AlbumService.get_all_albums()
     serializer_class = AlbumSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class TrackViewSet(viewsets.ModelViewSet):
     queryset = TrackService.get_all_tracks()
     serializer_class = TrackSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class PlaylistViewSet(viewsets.ModelViewSet):
     queryset = PlaylistService.get_all_playlists()
     serializer_class = PlaylistSerializer
+    permission_classes = (IsAuthenticated,)
