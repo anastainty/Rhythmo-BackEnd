@@ -1,6 +1,17 @@
 from .models import Track, ListeningHistory
 from django.utils import timezone
 from .models import User, Artist, Genre, Album, Track, Playlist
+from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
+from rest_framework_simplejwt.exceptions import TokenError
+import requests
+from django.shortcuts import redirect
+from django.core.mail import send_mail
+from itsdangerous import URLSafeTimedSerializer
+from django.conf import settings
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+from itsdangerous import SignatureExpired, BadSignature
 
 
 class TrackService:
@@ -59,3 +70,70 @@ class PlaylistService:
     @staticmethod
     def get_all_playlists():
         return Playlist.objects.all()
+
+def verify_and_refresh_tokens(request):
+    access_token = request.COOKIES.get('access')
+    refresh_token = request.COOKIES.get('refresh')
+
+    if access_token:
+        try:
+            # Verify the access token
+            token = AccessToken(access_token)
+            return True  # Access token is valid
+
+        except TokenError:
+            # Access token is expired, attempt to refresh using refresh token
+            if refresh_token:
+                try:
+                    response = requests.post(
+                        f"{request.scheme}://{request.get_host()}/api/token/refresh/",
+                        data={'refresh': refresh_token}
+                    )
+                    if response.status_code == 200:
+                        new_access_token = response.json().get('access')
+                        response = redirect('main')
+                        response.set_cookie('access', new_access_token)
+                        return response  # Return updated response with refreshed token
+                    else:
+                        # Refresh token failed, redirect to login
+                        return redirect('login')
+                except Exception as e:
+                    return redirect('login')
+            else:
+                # No refresh token, redirect to login
+                return redirect('login')
+    else:
+        # No access token, redirect to login
+        return redirect('login')
+
+def generate_token(user):
+    serializer = URLSafeTimedSerializer(settings.SECRET_KEY)
+    return serializer.dumps(user.email, salt=settings.SECRET_KEY)
+
+class RegistrationService:
+
+    def send_verification_email(request, user):
+        token = generate_token(user)
+        current_site = get_current_site(request)
+        subject = 'Activate Your Account'
+        message = render_to_string('player/verify_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': user.pk,
+            'token': token,
+        })
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+
+    # Function to activate user account based on the verification token
+    def activate_user(uid, token):
+        try:
+            user = User.objects.get(pk=uid)
+            serializer = URLSafeTimedSerializer(settings.SECRET_KEY)
+            email = serializer.loads(token, salt=settings.SECRET_KEY, max_age=3600)
+            if user.email == email:
+                user.is_active = True
+                user.save()
+                return True
+            return False
+        except (SignatureExpired, BadSignature, User.DoesNotExist):
+            return False
