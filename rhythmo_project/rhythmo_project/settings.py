@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_spectacular',
     'player',
 ]
 
@@ -173,7 +174,8 @@ LOGGING = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SIMPLE_JWT = {
@@ -222,3 +224,10 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Rhythmo API',
+    'DESCRIPTION': 'Rhythmo – это инновационный музыкальный стриминговый сервис, который предоставит пользователям беспрецедентный опыт прослушивания музыки. Сервис будет сочетать в себе технологии рекомендаций и персонализированных плейлистов с удобным интерфейсом и доступом к огромной библиотеке треков для всех авторизованных пользователей. Наш проект – это инновационный музыкальный стриминговый сервис, который предоставит пользователям беспрецедентный опыт прослушивания музыки. Сервис будет сочетать в себе технологии рекомендаций и персонализированных плейлистов с удобным интерфейсом и доступом к огромной библиотеке треков для всех авторизованных пользователей.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
