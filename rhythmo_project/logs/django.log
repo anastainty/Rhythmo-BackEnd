@@ -68,3 +68,35 @@ INFO 2024-09-29 18:58:36,506 basehttp "DELETE /api/users/1/ HTTP/1.1" 200 10640
 WARNING 2024-09-29 19:13:28,730 log Bad Request: /api/playlists/1/
 WARNING 2024-09-29 19:15:49,144 log Bad Request: /api/playlists/1/
 WARNING 2024-09-29 19:17:03,171 log Bad Request: /api/playlists/1/
+INFO 2024-10-29 12:15:27,469 autoreload Watching for file changes with StatReloader
+INFO 2024-10-29 12:15:29,773 basehttp "POST /api/token/refresh/ HTTP/1.1" 200 241
+INFO 2024-10-29 12:15:29,777 basehttp "GET / HTTP/1.1" 302 0
+INFO 2024-10-29 12:15:29,795 basehttp "GET /login/ HTTP/1.1" 200 520
+INFO 2024-10-29 12:15:38,378 basehttp "POST /login/ HTTP/1.1" 200 678
+INFO 2024-10-29 12:15:46,955 basehttp "POST /login/ HTTP/1.1" 200 678
+ERROR 2024-10-29 12:18:59,172 log Internal Server Error: /activate/5/ImFuYXN0YWludHlAZ21haWwuY29tIg.ZyDJKg.WxB4j_eePVcG5owjtIBPth5GRSk/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/anastasiaintyakova/Library/Mobile Documents/com~apple~CloudDocs/proga/Rhythmo-BackEnd/rhythmo_project/player/views.py", line 96, in activate_view
+    return render(request, 'activation_failed.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: activation_failed.html
+ERROR 2024-10-29 12:18:59,189 basehttp "GET /activate/5/ImFuYXN0YWludHlAZ21haWwuY29tIg.ZyDJKg.WxB4j_eePVcG5owjtIBPth5GRSk/ HTTP/1.1" 500 87492
+INFO 2024-10-29 15:01:21,667 autoreload Watching for file changes with StatReloader
+INFO 2024-10-29 15:01:27,555 basehttp "POST /api/token/refresh/ HTTP/1.1" 200 241
+INFO 2024-10-29 15:01:27,563 basehttp "GET / HTTP/1.1" 302 0
+INFO 2024-10-29 15:01:27,577 basehttp "GET /login/ HTTP/1.1" 200 520
+INFO 2024-10-29 15:07:16,561 autoreload /Users/anastasiaintyakova/Library/Mobile Documents/com~apple~CloudDocs/proga/Rhythmo-BackEnd/rhythmo_project/rhythmo_project/settings.py changed, reloading.
