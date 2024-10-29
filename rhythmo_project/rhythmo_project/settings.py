@@ -131,6 +131,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 import os
+from logging.handlers import TimedRotatingFileHandler
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -140,8 +141,11 @@ LOGGING = {
     'handlers': {
         'file': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/log.txt'),
+            'when': 'D',
+            'interval': 1,
+            'backupCount': 10,
             'formatter': 'verbose',
         },
     },
@@ -159,6 +163,7 @@ LOGGING = {
         },
     },
 }
+
 
 
 REST_FRAMEWORK = {
