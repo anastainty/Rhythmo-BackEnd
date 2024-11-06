@@ -1,7 +1,6 @@
 from .models import Track, ListeningHistory
 from django.utils import timezone
 from .models import User, Artist, Genre, Album, Track, Playlist
-from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 import requests
@@ -12,7 +11,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from itsdangerous import SignatureExpired, BadSignature
-
+from django.contrib.auth import get_user_model
 
 class TrackService:
     @staticmethod
@@ -48,7 +47,8 @@ class TrackService:
 class UserService:
     @staticmethod
     def get_all_users():
-        return User.objects.all()
+        user = get_user_model()
+        return user.objects.all()
 
 class ArtistService:
     @staticmethod
@@ -78,7 +78,7 @@ def verify_and_refresh_tokens(request):
     if access_token:
         try:
             # Verify the access token
-            token = AccessToken(access_token)
+            AccessToken(access_token)
             return True  # Access token is valid
 
         except TokenError:
@@ -97,7 +97,7 @@ def verify_and_refresh_tokens(request):
                     else:
                         # Refresh token failed, redirect to login
                         return redirect('login')
-                except Exception as e:
+                except Exception:
                     return redirect('login')
             else:
                 # No refresh token, redirect to login
@@ -112,7 +112,7 @@ def generate_token(user):
 
 class RegistrationService:
 
-    def send_verification_email(request, user):
+    def send_verification_email(self, request, user):
         token = generate_token(user)
         current_site = get_current_site(request)
         subject = 'Activate Your Account'
@@ -125,7 +125,7 @@ class RegistrationService:
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
 
     # Function to activate user account based on the verification token
-    def activate_user(uid, token):
+    def activate_user(self, uid, token):
         try:
             user = User.objects.get(pk=uid)
             serializer = URLSafeTimedSerializer(settings.SECRET_KEY)
@@ -135,5 +135,5 @@ class RegistrationService:
                 user.save()
                 return True
             return False
-        except (SignatureExpired, BadSignature, User.DoesNotExist):
+        except (BadSignature, User.DoesNotExist):
             return False

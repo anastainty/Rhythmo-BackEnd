@@ -9,7 +9,7 @@ class UserTests(APITestCase):
         self.user_data = {
             'username': 'testuser',
             'email': 'testuser@example.com',
-            'password_hash': 'hashed_password',
+            'password': 'hashed_password',
             'avatar_path': 'path/to/avatar.jpg'
         }
 

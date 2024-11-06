@@ -11,7 +11,7 @@ from .services import (
     UserService, ArtistService, GenreService,
     AlbumService, TrackService, PlaylistService
 )
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from .forms import UserRegisterForm, UserLoginForm
 from rest_framework_simplejwt.tokens import RefreshToken
 from .services import verify_and_refresh_tokens, RegistrationService

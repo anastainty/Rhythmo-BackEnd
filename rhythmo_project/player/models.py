@@ -1,20 +1,18 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.contrib.auth.hashers import make_password
+from decouple import config
 
-class User(models.Model):
-    username = models.CharField(max_length=255, db_index=True)
-    email = models.EmailField(max_length=255, unique=True, db_index=True)
-    password_hash = models.TextField()
+class User(AbstractUser):
+    password = models.CharField(max_length=255, default=make_password(config('DEFAULT_PASSWORD')))
     avatar_path = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
     def __str__(self):
         return self.username
 
 class Artist(models.Model):
     name = models.CharField(max_length=255, db_index=True)
-    bio = models.TextField(blank=True, null=True)
-    avatar_path = models.TextField(blank=True, null=True)
+    bio = models.TextField(blank=True)
+    avatar_path = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
