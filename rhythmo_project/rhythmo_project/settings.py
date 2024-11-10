@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_spectacular',
+    'channels',
     'player',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +75,7 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'rhythmo_project.asgi.application'
 WSGI_APPLICATION = 'rhythmo_project.wsgi.application'
 
 
@@ -225,4 +228,13 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Rhythmo – это инновационный музыкальный стриминговый сервис, который предоставит пользователям беспрецедентный опыт прослушивания музыки. Сервис будет сочетать в себе технологии рекомендаций и персонализированных плейлистов с удобным интерфейсом и доступом к огромной библиотеке треков для всех авторизованных пользователей. Наш проект – это инновационный музыкальный стриминговый сервис, который предоставит пользователям беспрецедентный опыт прослушивания музыки. Сервис будет сочетать в себе технологии рекомендаций и персонализированных плейлистов с удобным интерфейсом и доступом к огромной библиотеке треков для всех авторизованных пользователей.',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+}
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
 }
