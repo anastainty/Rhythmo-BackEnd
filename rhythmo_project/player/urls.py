@@ -2,7 +2,7 @@ from django.urls import path, include
 from . import views
 from rest_framework.routers import DefaultRouter
 from .views import UserViewSet, ArtistViewSet, GenreViewSet, AlbumViewSet, TrackViewSet, PlaylistViewSet, register_view, \
-    activate_view
+    activate_view, RegisterAPIView
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 router = DefaultRouter()
@@ -17,6 +17,7 @@ urlpatterns = [
     path('add_track/', views.add_track, name='add_track'),
     path('', views.track_list, name='track_list'),
     path('api/', include(router.urls)),
+    path('api/register/', RegisterAPIView.as_view(), name='api-register'),
     path('tracks/listen/<int:track_id>/', views.listen_track, name='listen_track'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),

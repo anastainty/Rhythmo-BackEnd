@@ -112,7 +112,7 @@ def generate_token(user):
 
 class RegistrationService:
 
-    def send_verification_email(self, request, user):
+    def send_verification_email(request, user):
         token = generate_token(user)
         current_site = get_current_site(request)
         subject = 'Activate Your Account'
@@ -125,7 +125,7 @@ class RegistrationService:
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
 
     # Function to activate user account based on the verification token
-    def activate_user(self, uid, token):
+    def activate_user(uid, token):
         try:
             user = User.objects.get(pk=uid)
             serializer = URLSafeTimedSerializer(settings.SECRET_KEY)

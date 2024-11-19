@@ -15,6 +15,10 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from .forms import UserRegisterForm, UserLoginForm
 from rest_framework_simplejwt.tokens import RefreshToken
 from .services import verify_and_refresh_tokens, RegistrationService
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import UserRegisterSerializer
 
 
 #@login_required
@@ -86,6 +90,22 @@ def register_view(request):
     else:
         form = UserRegisterForm()
     return render(request, 'player/register.html', {'form': form})
+
+
+class RegisterAPIView(APIView):
+    def post(self, request):
+        serializer = UserRegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            user.set_password(serializer.validated_data['password'])
+            user.is_active = False
+            user.save()
+
+            RegistrationService.send_verification_email(request, user)
+
+            return Response({"message": "User registered successfully. Please check your email for verification."},
+                            status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Activation view that delegates to services to activate user
