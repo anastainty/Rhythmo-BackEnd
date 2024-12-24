@@ -19,6 +19,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import UserRegisterSerializer
+from django.shortcuts import get_object_or_404
+from .models import User, Playlist, PlaylistTrack, Track, Artist, Album
+from PIL import Image
+from io import BytesIO
+import base64
 
 
 #@login_required
@@ -107,6 +112,132 @@ class RegisterAPIView(APIView):
                             status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class LibraryTracksAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def resize_image(self, image_path):
+        try:
+            with Image.open(image_path) as img:
+                img = img.resize((50, 50))  # Resize to 50x50
+                buffer = BytesIO()
+                img.save(buffer, format="JPEG")
+                buffer.seek(0)
+                return base64.b64encode(buffer.getvalue()).decode("utf-8")
+        except Exception as e:
+            return None  # Handle missing or invalid images
+
+    def get(self, request, username):
+        if request.user.username != username:
+            return Response({"detail": "Access denied."}, status=status.HTTP_403_FORBIDDEN)
+
+        user = get_object_or_404(User, username=username)
+
+        playlist = Playlist.objects.filter(user=user, name="library").first()
+        if not playlist:
+            return Response({"detail": "Library playlist not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        playlist_tracks = PlaylistTrack.objects.filter(playlist=playlist).select_related('track')
+        tracks = [pt.track for pt in playlist_tracks]
+
+        # Serialize tracks and add resized covers
+        serializer = TrackSerializer(tracks, many=True)
+        serialized_data = serializer.data
+
+        for track_data, track in zip(serialized_data, tracks):
+            if track.cover:  # Assuming `track.cover` is the path to the cover image
+                resized_cover = self.resize_image(track.cover.path)
+                if resized_cover:
+                    track_data['cover'] = resized_cover
+            else:
+                track_data['cover'] = None
+
+        return Response(serialized_data, status=status.HTTP_200_OK)
+
+
+class SearchAPIView(APIView):
+    def resize_image(self, image_path):
+        try:
+            with Image.open(image_path) as img:
+                img = img.resize((50, 50))  # Resize to 50x50
+                buffer = BytesIO()
+                img.save(buffer, format="JPEG")
+                buffer.seek(0)
+                return base64.b64encode(buffer.getvalue()).decode("utf-8")
+        except Exception as e:
+            return None  # Handle missing or invalid images
+
+    def post(self, request):
+        query = request.data.get('query', '')
+        type_ = request.data.get('type', 'All')
+
+        results = []
+
+        # Example: search tracks
+        if type_ in ['All', 'Songs']:
+            tracks = Track.objects.filter(title__icontains=query)
+            for track in tracks:
+                resized_cover = None
+                if track.cover:
+                    resized_cover = self.resize_image(track.cover.path)
+
+                results.append({
+                    'type': 'Track',
+                    'id': track.id,
+                    'title': track.title,
+                    'cover': resized_cover,  # Use resized image here
+                    'file': track.file.url if track.file else None,
+                    'details': f'Album: {track.album.title if track.album else "N/A"}',
+                })
+
+        if type_ in ['All', 'Playlists']:
+            playlists = Playlist.objects.filter(name__icontains=query)
+            for playlist in playlists:
+                resized_cover = None
+                if playlist.cover:  # Assuming playlist has a `cover` field
+                    resized_cover = self.resize_image(playlist.cover.path)
+
+                results.append({
+                    'type': 'Playlist',
+                    'id': playlist.id,
+                    'name': playlist.name,
+                    'cover': resized_cover,
+                    'details': f'Created by: {playlist.user.username}',
+                })
+
+            # Search Artists
+        if type_ in ['All', 'Artists']:
+            artists = Artist.objects.filter(name__icontains=query)
+            for artist in artists:
+                resized_cover = None
+                if artist.photo:
+                    resized_cover = self.resize_image(artist.photo.path)
+
+                results.append({
+                    'type': 'Artist',
+                    'id': artist.id,
+                    'name': artist.name,
+                    'cover': resized_cover,
+                })
+
+            # Search Albums
+        if type_ in ['All', 'Albums']:
+            albums = Album.objects.filter(title__icontains=query)
+            for album in albums:
+                resized_cover = None
+                if album.cover:  # Assuming album has a `cover` field
+                    resized_cover = self.resize_image(album.cover.path)
+
+                results.append({
+                    'type': 'Album',
+                    'id': album.id,
+                    'title': album.title,
+                    'cover': resized_cover,
+                    'details': f'Artist: {album.artist.name if album.artist else "N/A"}',
+                })
+
+
+        return Response(results, status=status.HTTP_200_OK)
 
 # Activation view that delegates to services to activate user
 def activate_view(request, uid, token):

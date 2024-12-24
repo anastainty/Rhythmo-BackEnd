@@ -12,7 +12,7 @@ class User(AbstractUser):
 class Artist(models.Model):
     name = models.CharField(max_length=255, db_index=True)
     bio = models.TextField(blank=True)
-    avatar_path = models.TextField(blank=True)
+    photo = models.ImageField(upload_to='artists/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -28,6 +28,7 @@ class Genre(models.Model):
 
 class Album(models.Model):
     title = models.CharField(max_length=255, db_index=True)
+    cover = models.ImageField(upload_to='albums/', blank=True, null=True)
     release_date = models.DateField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -37,6 +38,7 @@ class Album(models.Model):
 
 class Track(models.Model):
     title = models.CharField(max_length=255, db_index=True)
+    cover = models.ImageField(upload_to='tracks/', blank=True, null=True)
     album = models.ForeignKey(Album, on_delete=models.CASCADE, blank=True, null=True)
     genre = models.ForeignKey(Genre, on_delete=models.SET_NULL, blank=True, null=True)
     duration = models.TimeField(blank=True, null=True)
@@ -50,6 +52,7 @@ class Track(models.Model):
 
 class Playlist(models.Model):
     name = models.CharField(max_length=255, db_index=True)
+    cover = models.ImageField(upload_to='playlists/', blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 class ArtistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artist
-        fields = '__all__'
+        fields = ['id', 'name']
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -36,7 +36,7 @@ class AlbumSerializer(serializers.ModelSerializer):
 class TrackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Track
-        fields = '__all__'
+        fields = ['id', 'title', 'cover', 'album', 'genre', 'duration', 'release_date', 'file']
 
 
 class PlaylistSerializer(serializers.ModelSerializer):
